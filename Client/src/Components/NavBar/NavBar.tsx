@@ -16,7 +16,6 @@ const NavBar: React.FC = () => {
     document.body.classList.toggle("dark");
   }, []);
 
-  console.log(darkMode);
   return (
     <nav className="bg-gray-300 dark:bg-gray-800 text-white dark:text-gray-100 p-4 shadow-lg">
       <div className="flex justify-end items-center max-w-full mx-auto gap-6">
