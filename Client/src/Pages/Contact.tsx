@@ -1,4 +1,6 @@
+import LoadingSpinner from "../Components/Util/LoadingSpinner";
+
 function Contact() {
-  return <div>Contact</div>;
+  return <LoadingSpinner />;
 }
 export default Contact;

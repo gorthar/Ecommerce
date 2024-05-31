@@ -4,6 +4,7 @@ import { Product } from "../types/Product";
 import { useEffect, useState } from "react";
 import YellowStart from "../Components/Util/YellowStart";
 import GreyStar from "../Components/Util/GreyStar";
+import LoadingSpinner from "../Components/Util/LoadingSpinner";
 
 function ProductDetails() {
   const { id } = useParams();
@@ -29,9 +30,12 @@ function ProductDetails() {
   }, [id]);
 
   if (loading) {
+    return <LoadingSpinner />;
+  }
+  if (!product) {
     return (
-      <div className=" font-bold w-full h-96 text-center text-2xl mt-96 dark:text-gray-200">
-        Loading...
+      <div className="font-bold w-full h-96 text-center text-2xl mt-96 dark:text-gray-200">
+        Item not found
       </div>
     );
   }
@@ -44,7 +48,7 @@ function ProductDetails() {
   }
 
   return (
-    <div className="max-w-7xl mx-auto mt-20 flex justify-center gap-10">
+    <div className="max-w-7xl mx-auto mt-20 flex flex-wrap justify-center gap-5 md:gap-10">
       <div className="flex items-center justify-center">
         <img
           className="w-96 h-96 object-cover rounded-lg"
@@ -55,7 +59,7 @@ function ProductDetails() {
           alt={product?.name}
         />
       </div>
-      <div className="flex flex-col items-center mt-10">
+      <div className="flex flex-col items-center mt-10 mx-4 sm:mx-2 md:mx-0">
         <h1 className="text-4xl font-semibold text-gray-900 dark:text-white">
           {product?.name}
         </h1>
@@ -63,7 +67,7 @@ function ProductDetails() {
         <p className="text-3xl font-bold text-gray-900 dark:text-white mt-5">
           ${product?.price.toFixed(2)}
         </p>
-        <p className="text-lg text-gray-900 dark:text-white mt-5">
+        <p className="text-lg text-gray-900 dark:text-white mt-5 mx-2">
           {product?.description}
         </p>
         <div className="flex items-center justify-center mt-10">

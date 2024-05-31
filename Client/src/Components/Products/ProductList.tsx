@@ -4,6 +4,7 @@ import axios from "axios";
 import { Product } from "../../types/Product";
 import ProductCard from "./ProductCard";
 import ProductSelector from "./ProductSelector";
+import LoadingSpinner from "../Util/LoadingSpinner";
 
 const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
@@ -39,11 +40,7 @@ const ProductList: React.FC = () => {
   }, []);
 
   if (loading) {
-    return (
-      <div className=" font-bold w-full h-96 text-center text-2xl mt-96 dark:text-gray-200">
-        Loading...
-      </div>
-    );
+    return <LoadingSpinner />;
   }
 
   if (error) {
