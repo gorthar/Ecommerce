@@ -1,3 +1,4 @@
+import { Link } from "react-router-dom";
 import { Product } from "../../types/Product";
 import GreyStar from "../Util/GreyStar";
 import YellowStart from "../Util/YellowStart";
@@ -12,7 +13,7 @@ function ProductCard({ product }: ProductProps) {
 
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-4 overflow-hidden">
-      <a href="#">
+      <Link to={`/product/${product.id}`}>
         <img
           className="w-full h-56 object-cover rounded-t-lg hover:scale-105 transition-transform duration-300 ease-in-out"
           src={
@@ -21,7 +22,7 @@ function ProductCard({ product }: ProductProps) {
           }
           alt={product.name}
         />
-      </a>
+      </Link>
       <div className="px-5 pb-5">
         <div className="flex items-center mt-2.5 mb-5">
           <div className="flex items-center space-x-1 rtl:space-x-reverse">

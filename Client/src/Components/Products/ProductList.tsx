@@ -39,7 +39,11 @@ const ProductList: React.FC = () => {
   }, []);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return (
+      <div className=" font-bold w-full h-96 text-center text-2xl mt-96 dark:text-gray-200">
+        Loading...
+      </div>
+    );
   }
 
   if (error) {
