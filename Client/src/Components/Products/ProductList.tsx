@@ -1,15 +1,16 @@
 // src/components/ProductList.tsx
 import React, { useEffect, useState } from "react";
-import axios from "axios";
 import { Product } from "../../types/Product";
 import ProductCard from "./ProductCard";
 import ProductSelector from "./ProductSelector";
 import LoadingSpinner from "../Util/LoadingSpinner";
+import apiConnector from "../../ApiConnector/connector";
+import { toast } from "react-toastify";
 
 const ProductList: React.FC = () => {
   const [products, setProducts] = useState<Product[]>([]);
   const [loading, setLoading] = useState<boolean>(true);
-  const [error, setError] = useState<string | null>(null);
+
   const [selectedType, setSelectedType] = useState<string>("All");
   const typesOfProducts = new Set(products.map((product) => product.type));
 
@@ -25,12 +26,12 @@ const ProductList: React.FC = () => {
   useEffect(() => {
     const fetchProducts = async () => {
       try {
-        const response = await axios.get<Product[]>(
-          "http://localhost:5000/api/Products"
-        );
-        setProducts(response.data);
-      } catch (err) {
-        setError("Failed to fetch products");
+        const response = await apiConnector.Products.list();
+        setProducts(response);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (err: any) {
+        console.error(err);
+        toast.error(err.message);
       } finally {
         setLoading(false);
       }
@@ -41,10 +42,6 @@ const ProductList: React.FC = () => {
 
   if (loading) {
     return <LoadingSpinner />;
-  }
-
-  if (error) {
-    return <div>{error}</div>;
   }
 
   return (

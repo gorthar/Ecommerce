@@ -1,26 +1,26 @@
-import axios from "axios";
 import { useParams } from "react-router-dom";
 import { Product } from "../types/Product";
 import { useEffect, useState } from "react";
 import YellowStart from "../Components/Util/YellowStart";
 import GreyStar from "../Components/Util/GreyStar";
 import LoadingSpinner from "../Components/Util/LoadingSpinner";
+import apiConnector from "../ApiConnector/connector";
+import NotFoundPage from "./NotFoundPage";
 
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
-  const [error, setError] = useState<string | null>(null);
 
   useEffect(() => {
     const fetchProduct = async () => {
+      if (!id) return;
       try {
-        const response = await axios.get<Product>(
-          `http://localhost:5000/api/Products/${id}`
-        );
-        setProduct(response.data);
-      } catch (err) {
-        setError("Failed to fetch product");
+        const response = await apiConnector.Products.details(id);
+        setProduct(response);
+        // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      } catch (error: any) {
+        console.log(error);
       } finally {
         setLoading(false);
       }
@@ -33,25 +33,14 @@ function ProductDetails() {
     return <LoadingSpinner />;
   }
   if (!product) {
-    return (
-      <div className="font-bold w-full h-96 text-center text-2xl mt-96 dark:text-gray-200">
-        Item not found
-      </div>
-    );
-  }
-  if (error) {
-    return (
-      <div className="font-bold w-full h-96 text-center text-2xl mt-96 dark:text-gray-200">
-        {error}
-      </div>
-    );
+    return <NotFoundPage />;
   }
 
   return (
-    <div className="max-w-7xl mx-auto mt-20 flex flex-wrap justify-center gap-5 md:gap-10">
-      <div className="flex items-center justify-center">
+    <div className="max-w-7xl mx-10 xl:mx-auto  mt-20 flex flex-wrap md:flex-nowrap justify-center gap-5 md:gap-10">
+      <div className="flex items-center shrink-0 justify-center bg-white rounded">
         <img
-          className="w-96 h-96 object-cover rounded-lg"
+          className="w-96 h-96 md:h-[50vw] md:w-[50vw] lg:h-[40vw] lg:w-[40vw] xl:max-w-[760px]  xl:max-h-[760px] object-contain rounded-lg"
           src={
             product?.pictureUrl ||
             "https://via.placeholder.com/400x300?text=Product+Image"
@@ -59,17 +48,21 @@ function ProductDetails() {
           alt={product?.name}
         />
       </div>
-      <div className="flex flex-col items-center mt-10 mx-4 sm:mx-2 md:mx-0">
+      <div className="flex flex-col  mt-10 mx-4 sm:mx-2 md:mx-0 ">
         <h1 className="text-4xl font-semibold text-gray-900 dark:text-white">
           {product?.name}
         </h1>
-
-        <p className="text-3xl font-bold text-gray-900 dark:text-white mt-5">
-          ${product?.price.toFixed(2)}
+        <p className="text-lg text-gray-900 dark:text-white mt-5 mx-2">
+          Brand: {product?.brand}
         </p>
+        <p className="text-3xl font-bold text-gray-900 dark:text-white mt-5">
+          Price : ${product?.price.toFixed(2)}
+        </p>
+
         <p className="text-lg text-gray-900 dark:text-white mt-5 mx-2">
           {product?.description}
         </p>
+
         <div className="flex items-center justify-center mt-10">
           <div className="flex items-center space-x-1 rtl:space-x-reverse ">
             {[...Array(Math.ceil(product?.starRating || 0))].map((_, i) => (
@@ -85,6 +78,9 @@ function ProductDetails() {
             </span>
           </div>
         </div>
+        <button className="bg-blue-500 text-white font-semibold px-4 py-4 rounded-md hover:bg-blue-600 ms-3 mt-10">
+          Add to Cart
+        </button>
       </div>
     </div>
   );
