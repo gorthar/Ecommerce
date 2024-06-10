@@ -1,10 +1,14 @@
+import { useStoreContext } from "../../Context/StoreContext";
+
 function CartButton() {
+  const { cart } = useStoreContext();
+
   return (
     <div className="flex justify-center items-center">
       <div className="relative">
         <div className="-top-3 absolute left-5">
           <p className="flex h-1 w-1 items-center justify-center rounded-full bg-red-500 p-3 text-xs text-white">
-            3
+            {cart?.items.length || 0}
           </p>
         </div>
         <svg

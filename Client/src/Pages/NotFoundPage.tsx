@@ -8,7 +8,7 @@ function NotFoundPage() {
         The page you are looking for does not exist!
       </p>
       <p className="text-lg mt-4">
-        It might becouse of an old link, or sometihng unrelated. Please check
+        It might becouse of an old link, or something unrelated. Please check
         the URL in the address bar and try again.
       </p>
       <p className="text-lg mt-4">OR</p>

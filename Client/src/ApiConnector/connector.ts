@@ -3,6 +3,7 @@ import { toast } from "react-toastify";
 
 
 axios.defaults.baseURL = "http://localhost:5000/api/";
+axios.defaults.withCredentials = true; 
 
 function responseBody(response: AxiosResponse){
   return response.data;
@@ -50,37 +51,17 @@ const TestErrors = {
     getValidationError: () => requests.get("errors/validation-error"),
     };
 
+const Basket = {
+    get: () => requests.get("Basket"),
+    add: (productId: string, qantity=1) => requests.post(`Basket?productId=${productId}&quantity=${qantity}`, {}),
+    remove: (productId: string , qantity=1) => requests.del(`Basket?productId=${productId}&quantity=${qantity}`),
+    };
+
 const apiConnector = {
     Products,
     TestErrors,
+    Basket,
 };
 
 export default apiConnector;
 
-/*
-AxiosError {message: 'Request failed with status code 404', name: 'AxiosError', code: 'ERR_BAD_REQUEST', config: {…}, request: XMLHttpRequest, …}
-code
-: 
-"ERR_BAD_REQUEST"
-config
-: 
-{transitional: {…}, adapter: Array(3), transformRequest: Array(1), transformResponse: Array(1), timeout: 0, …}
-message
-: 
-"Request failed with status code 404"
-name
-: 
-"AxiosError"
-request
-: 
-XMLHttpRequest {onreadystatechange: null, readyState: 4, timeout: 0, withCredentials: false, upload: XMLHttpRequestUpload, …}
-response
-: 
-{data: {…}, status: 404, statusText: 'Not Found', headers: AxiosHeaders, config: {…}, …}
-stack
-: 
-"AxiosError: Request failed with status code 404\n    at settle (http://localhost:3000/node_modules/.vite/deps/axios.js?v=5c747f84:1216:12)\n    at XMLHttpRequest.onloadend (http://localhost:3000/node_modules/.vite/deps/axios.js?v=5c747f84:1562:7)\n    at Axios.request (http://localhost:3000/node_modules/.vite/deps/axios.js?v=5c747f84:2078:41)\n    at async fetchProduct (http://localhost:3000/src/Pages/ProductDetails.tsx?t=1717193893925:27:34)"
-[[Prototype]]
-: 
-Error
-*/

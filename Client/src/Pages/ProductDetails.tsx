@@ -6,11 +6,14 @@ import GreyStar from "../Components/Util/GreyStar";
 import LoadingSpinner from "../Components/Util/LoadingSpinner";
 import apiConnector from "../ApiConnector/connector";
 import NotFoundPage from "./NotFoundPage";
+import { useStoreContext } from "../Context/StoreContext";
+import { toast } from "react-toastify";
 
 function ProductDetails() {
   const { id } = useParams();
   const [product, setProduct] = useState<Product | null>(null);
   const [loading, setLoading] = useState(true);
+  const { addOneToCart } = useStoreContext();
 
   useEffect(() => {
     const fetchProduct = async () => {
@@ -34,6 +37,11 @@ function ProductDetails() {
   }
   if (!product) {
     return <NotFoundPage />;
+  }
+  function addToCart() {
+    if (!product) return;
+    addOneToCart(product.id);
+    toast.success("Product added to cart");
   }
 
   return (
@@ -78,7 +86,10 @@ function ProductDetails() {
             </span>
           </div>
         </div>
-        <button className="bg-blue-500 text-white font-semibold px-4 py-4 rounded-md hover:bg-blue-600 ms-3 mt-10">
+        <button
+          onClick={addToCart}
+          className="bg-blue-500 text-white font-semibold px-4 py-4 rounded-md hover:bg-blue-600 ms-3 mt-10"
+        >
           Add to Cart
         </button>
       </div>

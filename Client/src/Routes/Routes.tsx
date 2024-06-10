@@ -5,6 +5,7 @@ import Contact from "../Pages/Contact";
 import Cart from "../Pages/Cart";
 import ProductDetails from "../Pages/ProductDetails";
 import NotFoundPage from "../Pages/NotFoundPage";
+import Checkout from "../Pages/Checkout";
 
 export const router = createBrowserRouter([
   {
@@ -30,6 +31,10 @@ export const router = createBrowserRouter([
       {
         path: "not-found",
         element: <NotFoundPage />,
+      },
+      {
+        path: "/checkout",
+        element: <Checkout />,
       },
       {
         path: "*",

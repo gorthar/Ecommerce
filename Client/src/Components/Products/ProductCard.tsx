@@ -2,14 +2,22 @@ import { Link } from "react-router-dom";
 import { Product } from "../../types/Product";
 import GreyStar from "../Util/GreyStar";
 import YellowStart from "../Util/YellowStart";
+import { useStoreContext } from "../../Context/StoreContext";
+import { toast } from "react-toastify";
 
 interface ProductProps {
   product: Product;
 }
 
 function ProductCard({ product }: ProductProps) {
+  const { addOneToCart } = useStoreContext();
   const fullStar = Math.ceil(product.starRating);
   const emptyStar = 5 - fullStar;
+
+  function addToCart() {
+    addOneToCart(product.id);
+    toast.success("Product added to cart");
+  }
 
   return (
     <div className="w-full max-w-sm bg-white border border-gray-200 rounded-lg shadow dark:bg-gray-800 dark:border-gray-700 m-4 overflow-hidden">
@@ -46,7 +54,10 @@ function ProductCard({ product }: ProductProps) {
           <p className="text-3xl font-bold text-gray-900 dark:text-white">
             ${product.price.toFixed(2)}
           </p>
-          <button className="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition-colors duration-300  dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-gray-300 dark:hover:text-gray-100">
+          <button
+            onClick={addToCart}
+            className="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition-colors duration-300  dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-gray-300 dark:hover:text-gray-100 font-semibold"
+          >
             Add to Cart
           </button>
         </div>

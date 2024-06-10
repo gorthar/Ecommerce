@@ -6,11 +6,12 @@ namespace API.Data
 {
     public class ApplicationDbContext : DbContext
     {
-        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) :base(options) 
+        public ApplicationDbContext(DbContextOptions<ApplicationDbContext> options) : base(options)
         {
-            
+
         }
 
         public DbSet<Product> Products { get; set; }
+        public DbSet<Basket> Baskets { get; set; }
     }
 }
