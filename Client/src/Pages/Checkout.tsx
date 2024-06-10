@@ -8,7 +8,7 @@ function Checkout() {
     <section className="bg-white py-8 antialiased dark:bg-gray-900 md:py-16">
       <div className="flex justify-center">
         <ol className="items-center flex w-full max-w-2xl text-center text-sm font-medium text-gray-500 dark:text-gray-400 sm:text-base">
-          <li className="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 dark:text-primary-500 dark:after:border-gray-700 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
+          <li className="after:border-1 flex items-center text-primary-700 after:mx-6 after:hidden after:h-1 after:w-full after:border-b after:border-gray-200 dark:text-primary-500 dark:after:border-green-700 sm:after:inline-block sm:after:content-[''] md:w-full xl:after:mx-10">
             <span className="flex items-center after:mx-2 after:text-gray-200 after:content-['/'] dark:after:text-gray-500 sm:after:hidden">
               <svg
                 className="me-2 h-4 w-4 sm:h-5 sm:w-5"
