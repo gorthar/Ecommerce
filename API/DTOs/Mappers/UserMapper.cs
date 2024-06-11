@@ -8,12 +8,13 @@ namespace API.DTOs.Mappers
 {
     public static class UserMapper
     {
+
         public static UserLoggedInDto toLoggedInUserDto(this User user)
         {
             return new UserLoggedInDto
             {
-                UserName = user.UserName,
-                Email = user.Email
+
+                Email = user.Email,
             };
         }
     }

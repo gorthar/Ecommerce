@@ -6,10 +6,13 @@ using System.Threading.Tasks;
 using API.DTOs;
 using API.DTOs.Mappers;
 using API.Entities;
+using API.Services;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore.Metadata.Internal;
 using Microsoft.Extensions.Logging;
+using NuGet.Common;
 
 namespace API.Controllers
 {
@@ -18,11 +21,13 @@ namespace API.Controllers
     {
         private readonly ILogger<AccountController> _logger;
         private readonly UserManager<User> _userManager;
+        private readonly TokenService _tokenService;
 
-        public AccountController(ILogger<AccountController> logger, UserManager<User> userManager)
+        public AccountController(ILogger<AccountController> logger, UserManager<User> userManager, TokenService tokenService)
         {
             _logger = logger;
             _userManager = userManager;
+            _tokenService = tokenService;
         }
 
         [HttpPost("login")]
@@ -33,8 +38,9 @@ namespace API.Controllers
 
             var result = await _userManager.CheckPasswordAsync(user, loginDto.Password);
             if (!result) return Unauthorized("Invalid password or password");
-
-            return Ok(user.toLoggedInUserDto());
+            var returner = user.toLoggedInUserDto();
+            returner.Token = await _tokenService.CreateToken(user);
+            return Ok(returner);
         }
 
         [HttpPost("register")]
@@ -61,6 +67,16 @@ namespace API.Controllers
             return Ok();
         }
 
+        [Authorize]
+        [HttpGet("currentuser")]
+
+        public async Task<IActionResult> GetCurrentUser()
+        {
+            var user = await _userManager.FindByNameAsync(User.Identity.Name);
+            var returner = user.toLoggedInUserDto();
+            returner.Token = await _tokenService.CreateToken(user);
+            return Ok(returner);
+        }
 
 
 
