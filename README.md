@@ -4,7 +4,7 @@ This is an Ecommerce project built with a .NET Core API and a React client appli
 
 ## Project Status
 
-Currently on development phase
+Currently under development
 
 ## Project Structure
 
