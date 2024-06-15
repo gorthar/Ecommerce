@@ -1,5 +1,10 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
+
+import globalRouter from "@/globalRouter";
 import axios, { AxiosError, AxiosResponse } from "axios";
+
 import { toast } from "react-toastify";
+
 
 
 axios.defaults.baseURL = "http://localhost:5000/api/";
@@ -9,16 +14,51 @@ function responseBody(response: AxiosResponse){
   return response.data;
 }
 
+axios.interceptors.request.use(config => {
+    const savedUser = localStorage.getItem("user");
+    const user = savedUser ? JSON.parse(savedUser) : null;
+    const token = user ? user.token : null;
+    if (token) {
+        config.headers.Authorization = `Bearer ${token}`;
+    }
+    return config;
+    }, error => {
+    return Promise.reject(error);
+    }
+
+
+);
+
 axios.interceptors.response.use( async response => {
     return response;
     }, (error: AxiosError) => {
     const { data, status } = error.response as AxiosResponse;
     
     if (status === 400) {
-        toast.error(data.title);
+        
+        if(data.errors) {
+            const modalStateErrors = [];
+            for (const key in data.errors) {
+                if (data.errors[key]&& !key.includes("UserName")) {
+                    const errorMessage = data.errors[key];
+                
+                    modalStateErrors.push(errorMessage);
+                
+                }
+            }
+            toast.error( modalStateErrors.join("\n"));
+        }
+        else {
+            toast.error(data.title);
+        }
     }
     if (status === 401) {
-        toast.error(data.title);
+        toast.error(data || "Unauthorized! Please login to continue");
+        localStorage.removeItem("user");
+        if(globalRouter.navigate) {
+            globalRouter.navigate("/login");
+        }
+
     }
     if (status === 404) {
         toast.error(data.title);
@@ -57,10 +97,17 @@ const Basket = {
     remove: (productId: string , qantity=1) => requests.del(`Basket?productId=${productId}&quantity=${qantity}`),
     };
 
+const Account = {
+    login: (values: any) => requests.post(`account/login`, values),
+    register: (values: any) => requests.post('account/register', values),
+    currentUser: () => requests.get('account/currentUser')
+    };
+
 const apiConnector = {
     Products,
     TestErrors,
     Basket,
+    Account,
 };
 
 export default apiConnector;

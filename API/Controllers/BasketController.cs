@@ -21,24 +21,31 @@ namespace API.Controllers
             _context = context;
         }
 
-        private bool BasketExists(int id)
+
+        private async Task<Basket> RetriveBasket(string buyerId)
         {
-            return _context.Baskets.Any(e => e.Id == id);
-        }
-        private async Task<Basket> RetriveBasket()
-        {
-            var buyerId = Request.Cookies["buyerId"];
+            if (string.IsNullOrEmpty(buyerId))
+            {
+                Response.Cookies.Delete("buyerId");
+                return null;
+            };
+
             return await _context.Baskets
                     .Include(x => x.Items)
                     .ThenInclude(x => x.Product)
                     .FirstOrDefaultAsync(x => x.BuyerId == buyerId);
         }
 
+        private string GetBuyerId()
+        {
+            return User.Identity?.Name ?? Request.Cookies["buyerId"];
+        }
+
         // GET: api/Basket
         [HttpGet(Name = "GetBasket")]
         public async Task<ActionResult<BasketDto>> GetBasket()
         {
-            Basket basket = await RetriveBasket();
+            Basket basket = await RetriveBasket(GetBuyerId());
 
             if (basket == null) return NotFound();
             return Ok(basket.toBasketDto());
@@ -50,7 +57,7 @@ namespace API.Controllers
         [HttpPost]
         public async Task<ActionResult<BasketDto>> AddItemsToBasket(int productId, int quantity)
         {
-            var basket = await RetriveBasket();
+            var basket = await RetriveBasket(GetBuyerId());
 
             if (basket == null)
             {
@@ -71,9 +78,7 @@ namespace API.Controllers
         [HttpDelete]
         public async Task<ActionResult> RemoveItemFromBasket(int productId, int quantity)
         {
-            var basket = await _context.Baskets
-                .Include(x => x.Items)
-                .FirstOrDefaultAsync(x => x.BuyerId == Request.Cookies["buyerId"]);
+            var basket = await RetriveBasket(GetBuyerId());
 
             if (basket == null) return NotFound();
 
@@ -88,9 +93,14 @@ namespace API.Controllers
 
         private Basket CreateBasket()
         {
-            var buyerId = Guid.NewGuid().ToString();
-            var cookieOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(30) };
-            Response.Cookies.Append("buyerId", buyerId, cookieOptions);
+            var buyerId = User.Identity?.Name;
+            if (string.IsNullOrEmpty(buyerId))
+            {
+                buyerId = Guid.NewGuid().ToString();
+                var cookieOptions = new CookieOptions { IsEssential = true, Expires = DateTime.Now.AddDays(30) };
+                Response.Cookies.Append("buyerId", buyerId, cookieOptions);
+            }
+
             var basket = new Basket
             {
                 BuyerId = buyerId

@@ -6,6 +6,8 @@ import Cart from "../Pages/Cart";
 import ProductDetails from "../Pages/ProductDetails";
 import NotFoundPage from "../Pages/NotFoundPage";
 import Checkout from "../Pages/Checkout";
+import Login from "@/Pages/Login";
+import Register from "@/Pages/Register";
 
 export const router = createBrowserRouter([
   {
@@ -28,13 +30,23 @@ export const router = createBrowserRouter([
         path: "/product/:id",
         element: <ProductDetails />,
       },
-      {
-        path: "not-found",
-        element: <NotFoundPage />,
-      },
+
       {
         path: "/checkout",
         element: <Checkout />,
+      },
+      {
+        path: "login",
+        element: <Login />,
+      },
+      {
+        path: "register",
+        element: <Register />,
+      },
+
+      {
+        path: "not-found",
+        element: <NotFoundPage />,
       },
       {
         path: "*",

@@ -1,4 +1,4 @@
-import { useStoreContext } from "../../Context/StoreContext";
+import { useStoreContext } from "../../Context/useStoreContext";
 
 function CartButton() {
   const { cart } = useStoreContext();

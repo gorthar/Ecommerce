@@ -1,10 +1,32 @@
-function LoadingSpinner() {
+type LoadingSpinnerProps = {
+  //loading spinner component
+  size?: number;
+};
+
+function LoadingSpinner({ size = 96 }: LoadingSpinnerProps) {
+  const tailwindHeight = `h-${size}`;
+  let svgWithHeight = `w-${20} h-${size}`;
+  if (size < 10) {
+    svgWithHeight = "w-5 h-5";
+  }
+  if (size > 20) {
+    svgWithHeight = " w-20 h-20 ";
+  }
+
   return (
-    <div className=" font-bold w-full h-96 flex items-center justify-center text-2xl mt-96 dark:text-gray-200">
+    <div
+      className={
+        " font-bold w-full  flex items-center justify-center text-2xl mt-96 dark:text-gray-200 " +
+        tailwindHeight
+      }
+    >
       <div role="status">
         <svg
           aria-hidden="true"
-          className="w-20 h-20 text-gray-200 animate-spin dark:text-gray-600 fill-blue-600"
+          className={
+            " text-gray-200 animate-spin dark:text-gray-600 fill-blue-600 " +
+            svgWithHeight
+          }
           viewBox="0 0 100 101"
           fill="none"
           xmlns="http://www.w3.org/2000/svg"

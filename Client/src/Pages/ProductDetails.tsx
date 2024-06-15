@@ -6,7 +6,7 @@ import GreyStar from "../Components/Util/GreyStar";
 import LoadingSpinner from "../Components/Util/LoadingSpinner";
 import apiConnector from "../ApiConnector/connector";
 import NotFoundPage from "./NotFoundPage";
-import { useStoreContext } from "../Context/StoreContext";
+import { useStoreContext } from "../Context/useStoreContext";
 import { toast } from "react-toastify";
 
 function ProductDetails() {

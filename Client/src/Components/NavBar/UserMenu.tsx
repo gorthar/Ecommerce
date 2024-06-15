@@ -7,7 +7,6 @@ import {
   UserPlus,
 } from "lucide-react";
 
-import { Button } from "@/Components/ui/button";
 import {
   DropdownMenu,
   DropdownMenuContent,
@@ -17,29 +16,38 @@ import {
   DropdownMenuSeparator,
   DropdownMenuTrigger,
 } from "@/Components/ui/dropdown-menu";
-import { useState } from "react";
+import { useStoreContext } from "@/Context/useStoreContext";
+import { useNavigate } from "react-router-dom";
 
 function UserMenu() {
-  const [loggedIn, setLoggedIn] = useState(false);
+  const { loggedIn, setLoggedIn, user, setCart } = useStoreContext();
+  const navigate = useNavigate();
+  function logout() {
+    setLoggedIn(false);
+    localStorage.removeItem("user");
+    setCart(null);
+    navigate("/");
+  }
   if (!loggedIn)
     return (
       <DropdownMenu>
-        <DropdownMenuTrigger className="">
-          <Button className="bg-gray-300 hover:bg-blue-600 font-bold dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-blue-800  dark:hover:text-white">
-            <UserPlus className=" h-6 w-6" />
-          </Button>
+        <DropdownMenuTrigger
+          className="bg-gray-300 hover:bg-blue-600 font-bold px-2 py-1 rounded-lg 
+        dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-blue-800 dark:hover:text-white"
+        >
+          <UserPlus className=" h-6 w-6" />
         </DropdownMenuTrigger>
         <DropdownMenuContent className="w-72 bg-gray-300 dark:bg-gray-700 border-gray-200 border">
           <DropdownMenuLabel>Account</DropdownMenuLabel>
           <DropdownMenuSeparator />
           <DropdownMenuGroup>
-            <DropdownMenuItem>
+            <DropdownMenuItem onClick={() => navigate("/login")}>
               <User className="mr-2 h-4 w-4" />
-              <span>Sign In</span>
+              <span>Login</span>
             </DropdownMenuItem>
-            <DropdownMenuItem onClick={() => setLoggedIn(true)}>
+            <DropdownMenuItem onClick={() => navigate("/register")}>
               <PlusCircle className="mr-2 h-4 w-4" />
-              <span>Sign Up</span>
+              <span>Register</span>
             </DropdownMenuItem>
           </DropdownMenuGroup>
         </DropdownMenuContent>
@@ -48,13 +56,14 @@ function UserMenu() {
 
   return (
     <DropdownMenu>
-      <DropdownMenuTrigger className="">
-        <button className="bg-gray-300 hover:bg-blue-600 font-bold dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-blue-700  dark:hover:text-white px-3 py-1 rounded-lg ">
-          <User className=" h-6 w-6" />
-        </button>
+      <DropdownMenuTrigger className="bg-gray-300 hover:bg-blue-600 font-bold dark:bg-gray-800 dark:text-gray-300 dark:hover:bg-blue-700  dark:hover:text-white px-3 py-1 rounded-lg ">
+        <User className=" h-6 w-6" />
       </DropdownMenuTrigger>
-      <DropdownMenuContent className="w-72 bg-gray-300 dark:bg-gray-700 border-gray-200 border">
-        <DropdownMenuLabel>My Account</DropdownMenuLabel>
+      <DropdownMenuContent className="w-80 bg-gray-300 dark:bg-gray-700 border-gray-200 border">
+        <DropdownMenuLabel className="flex justify-between">
+          <span>My Account</span>
+          <span className="text-right">{user?.email}</span>
+        </DropdownMenuLabel>
         <DropdownMenuSeparator />
         <DropdownMenuGroup>
           <DropdownMenuItem>
@@ -71,7 +80,7 @@ function UserMenu() {
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
-        <DropdownMenuItem onClick={() => setLoggedIn(false)}>
+        <DropdownMenuItem onClick={() => logout()}>
           <LogOut className="mr-2 h-4 w-4" />
           <span>Log out</span>
         </DropdownMenuItem>

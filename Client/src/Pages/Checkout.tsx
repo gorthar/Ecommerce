@@ -1,5 +1,5 @@
 import CartStatusBar from "../Components/Cart/CartStatusBar";
-import { useStoreContext } from "../Context/StoreContext";
+import { useStoreContext } from "../Context/useStoreContext";
 
 function Checkout() {
   const { cart } = useStoreContext();
@@ -87,7 +87,9 @@ function Checkout() {
                     id="select-city-input-3"
                     className="block w-full rounded-lg border border-gray-300 bg-gray-50 p-2.5 text-sm text-gray-900 focus:border-primary-500 focus:ring-primary-500 dark:border-gray-600 dark:bg-gray-700 dark:text-white dark:placeholder:text-gray-400 dark:focus:border-primary-500 dark:focus:ring-primary-500"
                   >
-                    <option selected>Vancouver</option>
+                    <option selected value="VA">
+                      Vancouver
+                    </option>
                     <option value="NY">New York</option>
                     <option value="LA">Los Angeles</option>
                     <option value="CH">Chicago</option>
@@ -142,7 +144,7 @@ function Checkout() {
                         <g mask="url(#a)">
                           <path
                             fill="#D02F44"
-                            fill-rule="evenodd"
+                            fillRule="evenodd"
                             d="M19.6.5H0v.933h19.6V.5zm0 1.867H0V3.3h19.6v-.933zM0 4.233h19.6v.934H0v-.934zM19.6 6.1H0v.933h19.6V6.1zM0 7.967h19.6V8.9H0v-.933zm19.6 1.866H0v.934h19.6v-.934zM0 11.7h19.6v.933H0V11.7zm19.6 1.867H0v.933h19.6v-.933z"
                             clip-rule="evenodd"
                           />
@@ -150,7 +152,7 @@ function Checkout() {
                           <g filter="url(#filter0_d_343_121520)">
                             <path
                               fill="url(#paint0_linear_343_121520)"
-                              fill-rule="evenodd"
+                              fillRule="evenodd"
                               d="M1.867 1.9a.467.467 0 11-.934 0 .467.467 0 01.934 0zm1.866 0a.467.467 0 11-.933 0 .467.467 0 01.933 0zm1.4.467a.467.467 0 100-.934.467.467 0 000 .934zM7.467 1.9a.467.467 0 11-.934 0 .467.467 0 01.934 0zM2.333 3.3a.467.467 0 100-.933.467.467 0 000 .933zm2.334-.467a.467.467 0 11-.934 0 .467.467 0 01.934 0zm1.4.467a.467.467 0 100-.933.467.467 0 000 .933zm1.4.467a.467.467 0 11-.934 0 .467.467 0 01.934 0zm-2.334.466a.467.467 0 100-.933.467.467 0 000 .933zm-1.4-.466a.467.467 0 11-.933 0 .467.467 0 01.933 0zM1.4 4.233a.467.467 0 100-.933.467.467 0 000 .933zm1.4.467a.467.467 0 11-.933 0 .467.467 0 01.933 0zm1.4.467a.467.467 0 100-.934.467.467 0 000 .934zM6.533 4.7a.467.467 0 11-.933 0 .467.467 0 01.933 0zM7 6.1a.467.467 0 100-.933.467.467 0 000 .933zm-1.4-.467a.467.467 0 11-.933 0 .467.467 0 01.933 0zM3.267 6.1a.467.467 0 100-.933.467.467 0 000 .933zm-1.4-.467a.467.467 0 11-.934 0 .467.467 0 01.934 0z"
                               clip-rule="evenodd"
                             />
@@ -165,8 +167,8 @@ function Checkout() {
                             y2="6.1"
                             gradientUnits="userSpaceOnUse"
                           >
-                            <stop stop-color="#fff" />
-                            <stop offset="1" stop-color="#F0F0F0" />
+                            <stop stopColor="#fff" />
+                            <stop offset="1" stopColor="#F0F0F0" />
                           </linearGradient>
                           <filter
                             id="filter0_d_343_121520"
@@ -174,11 +176,11 @@ function Checkout() {
                             height="5.667"
                             x=".933"
                             y="1.433"
-                            color-interpolation-filters="sRGB"
+                            colorInterpolationFilters="sRGB"
                             filterUnits="userSpaceOnUse"
                           >
                             <feFlood
-                              flood-opacity="0"
+                              floodOpacity="0"
                               result="BackgroundImageFix"
                             />
                             <feColorMatrix
@@ -212,9 +214,9 @@ function Checkout() {
                       >
                         <path
                           stroke="currentColor"
-                          stroke-linecap="round"
-                          stroke-linejoin="round"
-                          stroke-width="2"
+                          strokeLinecap="round"
+                          strokeLinejoin="round"
+                          strokeWidth="2"
                           d="m19 9-7 7-7-7"
                         />
                       </svg>
@@ -266,15 +268,15 @@ function Checkout() {
                                 <g mask="url(#a)">
                                   <path
                                     fill="#D02F44"
-                                    fill-rule="evenodd"
+                                    fillRule="evenodd"
                                     d="M19.6.5H0v.933h19.6V.5zm0 1.867H0V3.3h19.6v-.933zM0 4.233h19.6v.934H0v-.934zM19.6 6.1H0v.933h19.6V6.1zM0 7.967h19.6V8.9H0v-.933zm19.6 1.866H0v.934h19.6v-.934zM0 11.7h19.6v.933H0V11.7zm19.6 1.867H0v.933h19.6v-.933z"
-                                    clip-rule="evenodd"
+                                    clipRule="evenodd"
                                   />
                                   <path fill="#46467F" d="M0 .5h8.4v6.533H0z" />
                                   <g filter="url(#filter0_d_343_121520)">
                                     <path
                                       fill="url(#paint0_linear_343_121520)"
-                                      fill-rule="evenodd"
+                                      fillRule="evenodd"
                                       d="M1.867 1.9a.467.467 0 11-.934 0 .467.467 0 01.934 0zm1.866 0a.467.467 0 11-.933 0 .467.467 0 01.933 0zm1.4.467a.467.467 0 100-.934.467.467 0 000 .934zM7.467 1.9a.467.467 0 11-.934 0 .467.467 0 01.934 0zM2.333 3.3a.467.467 0 100-.933.467.467 0 000 .933zm2.334-.467a.467.467 0 11-.934 0 .467.467 0 01.934 0zm1.4.467a.467.467 0 100-.933.467.467 0 000 .933zm1.4.467a.467.467 0 11-.934 0 .467.467 0 01.934 0zm-2.334.466a.467.467 0 100-.933.467.467 0 000 .933zm-1.4-.466a.467.467 0 11-.933 0 .467.467 0 01.933 0zM1.4 4.233a.467.467 0 100-.933.467.467 0 000 .933zm1.4.467a.467.467 0 11-.933 0 .467.467 0 01.933 0zm1.4.467a.467.467 0 100-.934.467.467 0 000 .934zM6.533 4.7a.467.467 0 11-.933 0 .467.467 0 01.933 0zM7 6.1a.467.467 0 100-.933.467.467 0 000 .933zm-1.4-.467a.467.467 0 11-.933 0 .467.467 0 01.933 0zM3.267 6.1a.467.467 0 100-.933.467.467 0 000 .933zm-1.4-.467a.467.467 0 11-.934 0 .467.467 0 01.934 0z"
                                       clip-rule="evenodd"
                                     />
@@ -289,8 +291,8 @@ function Checkout() {
                                     y2="6.1"
                                     gradientUnits="userSpaceOnUse"
                                   >
-                                    <stop stop-color="#fff" />
-                                    <stop offset="1" stop-color="#F0F0F0" />
+                                    <stop stopColor="#fff" />
+                                    <stop offset="1" stopColor="#F0F0F0" />
                                   </linearGradient>
                                   <filter
                                     id="filter0_d_343_121520"
@@ -298,11 +300,11 @@ function Checkout() {
                                     height="5.667"
                                     x=".933"
                                     y="1.433"
-                                    color-interpolation-filters="sRGB"
+                                    colorInterpolationFilters="sRGB"
                                     filterUnits="userSpaceOnUse"
                                   >
                                     <feFlood
-                                      flood-opacity="0"
+                                      floodOpacity="0"
                                       result="BackgroundImageFix"
                                     />
                                     <feColorMatrix
@@ -430,7 +432,7 @@ function Checkout() {
                                   <path
                                     fill="#fff"
                                     stroke="#fff"
-                                    stroke-width=".667"
+                                    strokeWidth=".667"
                                     d="M0 .167h-.901l.684.586 3.15 2.7v.609L-.194 6.295l-.14.1v1.24l.51-.319L3.83 5.033h.73L7.7 7.276a.488.488 0 00.601-.767L5.467 4.08v-.608l2.987-2.134a.667.667 0 00.28-.543V-.1l-.51.318L4.57 2.5h-.73L.66.229.572.167H0z"
                                   />
                                   <path
@@ -519,24 +521,24 @@ function Checkout() {
                                 <g mask="url(#a)">
                                   <path
                                     fill="#262626"
-                                    fill-rule="evenodd"
+                                    fillRule="evenodd"
                                     d="M0 5.167h19.6V.5H0v4.667z"
-                                    clip-rule="evenodd"
+                                    clipRule="evenodd"
                                   />
                                   <g filter="url(#filter0_d_374_135180)">
                                     <path
                                       fill="#F01515"
-                                      fill-rule="evenodd"
+                                      fillRule="evenodd"
                                       d="M0 9.833h19.6V5.167H0v4.666z"
-                                      clip-rule="evenodd"
+                                      clipRule="evenodd"
                                     />
                                   </g>
                                   <g filter="url(#filter1_d_374_135180)">
                                     <path
                                       fill="#FFD521"
-                                      fill-rule="evenodd"
+                                      fillRule="evenodd"
                                       d="M0 14.5h19.6V9.833H0V14.5z"
-                                      clip-rule="evenodd"
+                                      clipRule="evenodd"
                                     />
                                   </g>
                                 </g>

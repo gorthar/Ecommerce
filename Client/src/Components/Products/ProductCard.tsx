@@ -2,7 +2,7 @@ import { Link } from "react-router-dom";
 import { Product } from "../../types/Product";
 import GreyStar from "../Util/GreyStar";
 import YellowStart from "../Util/YellowStart";
-import { useStoreContext } from "../../Context/StoreContext";
+import { useStoreContext } from "../../Context/useStoreContext";
 import { toast } from "react-toastify";
 
 interface ProductProps {

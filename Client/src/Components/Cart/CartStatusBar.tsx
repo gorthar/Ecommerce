@@ -35,14 +35,13 @@ function CartStatusBar({ status }: CartStatusBarProps) {
             >
               <path
                 stroke="green"
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
               />
             </svg>
             <Link to="/cart">Cart</Link>
-            Cart
           </span>
         </li>
 
@@ -59,9 +58,9 @@ function CartStatusBar({ status }: CartStatusBarProps) {
             >
               <path
                 stroke={status === 1 ? "green" : "currentColor"}
-                stroke-linecap="round"
-                stroke-linejoin="round"
-                stroke-width="2"
+                strokeLinecap="round"
+                strokeLinejoin="round"
+                strokeWidth="2"
                 d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
               />
             </svg>
@@ -81,9 +80,9 @@ function CartStatusBar({ status }: CartStatusBarProps) {
           >
             <path
               stroke={status === 2 ? "green" : "currentColor"}
-              stroke-linecap="round"
-              stroke-linejoin="round"
-              stroke-width="2"
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth="2"
               d="M8.5 11.5 11 14l4-4m6 2a9 9 0 1 1-18 0 9 9 0 0 1 18 0Z"
             />
           </svg>
