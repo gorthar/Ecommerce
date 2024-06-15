@@ -2,6 +2,10 @@
 
 This is an Ecommerce project built with a .NET Core API and a React client application.
 
+## Project Status
+
+Currently under development
+
 ## Project Structure
 
 - `API/`: Contains the .NET Core API project.
