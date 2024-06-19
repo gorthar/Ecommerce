@@ -3,7 +3,7 @@ import LoadingSpinner from "@/Components/Util/LoadingSpinner";
 import { useStoreContext } from "@/Context/useStoreContext";
 
 import { FieldValues, useForm } from "react-hook-form";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useLocation, useNavigate } from "react-router-dom";
 
 function Login() {
   const navigate = useNavigate();
@@ -14,14 +14,21 @@ function Login() {
   } = useForm({
     mode: "onBlur",
   });
-  const { saveUser, setCart } = useStoreContext();
+  const { saveUser, setCart, getUser } = useStoreContext();
+  const location = useLocation();
+
   async function submitForm(data: FieldValues) {
-    const result = await apiConnector.Account.login(data);
-    console.log(result);
-    if (result) {
-      saveUser(result);
-      setCart(result.basket);
-      navigate("/");
+    try {
+      const result = await apiConnector.Account.login(data);
+      console.log(result);
+      if (result) {
+        saveUser(result);
+        setCart(result.basket);
+        getUser();
+        navigate(location.state?.from.pathname || "/");
+      }
+    } catch (err) {
+      console.log(err);
     }
   }
   return (

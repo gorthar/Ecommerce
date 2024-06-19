@@ -20,12 +20,13 @@ import { useStoreContext } from "@/Context/useStoreContext";
 import { useNavigate } from "react-router-dom";
 
 function UserMenu() {
-  const { loggedIn, setLoggedIn, user, setCart } = useStoreContext();
+  const { loggedIn, setLoggedIn, user, setCart, setUser } = useStoreContext();
   const navigate = useNavigate();
   function logout() {
     setLoggedIn(false);
     localStorage.removeItem("user");
     setCart(null);
+    setUser(null);
     navigate("/");
   }
   if (!loggedIn)

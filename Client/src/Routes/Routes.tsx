@@ -8,12 +8,22 @@ import NotFoundPage from "../Pages/NotFoundPage";
 import Checkout from "../Pages/Checkout";
 import Login from "@/Pages/Login";
 import Register from "@/Pages/Register";
+import RequireAuth from "./RequireAuth";
 
 export const router = createBrowserRouter([
   {
     path: "/",
     element: <App />,
     children: [
+      {
+        element: <RequireAuth />,
+        children: [
+          {
+            path: "/checkout",
+            element: <Checkout />,
+          },
+        ],
+      },
       {
         path: "/contact",
         element: <Contact />,
@@ -31,10 +41,6 @@ export const router = createBrowserRouter([
         element: <ProductDetails />,
       },
 
-      {
-        path: "/checkout",
-        element: <Checkout />,
-      },
       {
         path: "login",
         element: <Login />,
