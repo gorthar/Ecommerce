@@ -103,11 +103,18 @@ const Account = {
     currentUser: () => requests.get('account/currentUser')
     };
 
+const Orders = {
+    list: () => requests.get("Orders"),
+    details: (id: string) => requests.get(`Orders/${id}`),
+    create: (order: any) => requests.post("Orders", order),
+    };
+
 const apiConnector = {
     Products,
     TestErrors,
     Basket,
     Account,
+    Orders,
 };
 
 export default apiConnector;

@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using API.Entities;
+using Microsoft.EntityFrameworkCore;
 
 namespace API.DTOs.Mappers
 {
@@ -32,5 +33,14 @@ namespace API.DTOs.Mappers
                 Brand = basketItem.Product.Brand
             };
         }
+
+        public static IQueryable<Basket> RetriveBasketWithItems(this IQueryable<Basket> baskets, string buyerId)
+        {
+            return baskets.Include(x => x.Items)
+                          .ThenInclude(x => x.Product)
+                          .Where(x => x.BuyerId == buyerId);
+
+        }
+
     }
 }
