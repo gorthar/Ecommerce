@@ -9,6 +9,7 @@ import Checkout from "../Pages/Checkout";
 import Login from "@/Pages/Login";
 import Register from "@/Pages/Register";
 import RequireAuth from "./RequireAuth";
+import Orders from "@/Pages/Orders";
 
 export const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ export const router = createBrowserRouter([
           {
             path: "/checkout",
             element: <Checkout />,
+          },
+          {
+            path: "/orders",
+            element: <Orders />,
           },
         ],
       },

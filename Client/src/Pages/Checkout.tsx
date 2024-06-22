@@ -3,6 +3,7 @@ import CartStatusBar from "../Components/Cart/CartStatusBar";
 import { useStoreContext } from "../Context/useStoreContext";
 import { LoaderCircle } from "lucide-react";
 import apiConnector from "@/ApiConnector/connector";
+import { CreateOrder } from "@/types/Order";
 
 function Checkout() {
   const { cart, setCart } = useStoreContext();
@@ -17,8 +18,20 @@ function Checkout() {
     cart?.items.reduce((acc, item) => acc + item.price * item.quantity, 0) ?? 0;
 
   async function submitForm(data: FieldValues) {
+    const createOrder: CreateOrder = {
+      shipToAddress: {
+        fullName: data.name,
+        adress1: data.address1,
+        adress2: data.address2,
+        city: data.city,
+        state: "",
+        postCode: data.postcode,
+        country: data.country,
+      },
+      saveAddress: data.SaveAddress,
+    };
     try {
-      apiConnector.Orders.create(data);
+      apiConnector.Orders.create(createOrder);
       setCart(null);
     } catch (err) {
       console.log(err);

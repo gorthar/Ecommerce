@@ -1,11 +1,4 @@
-import {
-  CreditCard,
-  LogOut,
-  PlusCircle,
-  Settings,
-  User,
-  UserPlus,
-} from "lucide-react";
+import { CreditCard, LogOut, PlusCircle, User, UserPlus } from "lucide-react";
 
 import {
   DropdownMenu,
@@ -71,13 +64,9 @@ function UserMenu() {
             <User className="mr-2 h-4 w-4" />
             <span>Profile</span>
           </DropdownMenuItem>
-          <DropdownMenuItem>
+          <DropdownMenuItem onClick={() => navigate("/orders")}>
             <CreditCard className="mr-2 h-4 w-4" />
-            <span>Billing</span>
-          </DropdownMenuItem>
-          <DropdownMenuItem>
-            <Settings className="mr-2 h-4 w-4" />
-            <span>Settings</span>
+            <span>Orders</span>
           </DropdownMenuItem>
         </DropdownMenuGroup>
         <DropdownMenuSeparator />
