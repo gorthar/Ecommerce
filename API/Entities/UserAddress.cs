@@ -5,7 +5,7 @@ using System.Threading.Tasks;
 
 namespace API.Entities
 {
-    public class UserAddress : Adress
+    public class UserAddress : Address
     {
         public int Id { get; set; }
     }

@@ -7,7 +7,7 @@ using Microsoft.EntityFrameworkCore;
 namespace API.Entities.OrderAggragate
 {
     [Owned]
-    public class ShippingAddress : Adress
+    public class ShippingAddress : Address
     {
 
     }

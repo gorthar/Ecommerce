@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 namespace API.Data.Migrations
 {
     /// <inheritdoc />
-    public partial class AddedOrderEntities : Migration
+    public partial class AddressErrorFix : Migration
     {
         /// <inheritdoc />
         protected override void Up(MigrationBuilder migrationBuilder)
@@ -76,8 +76,8 @@ namespace API.Data.Migrations
                     UserEmail = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     OrderDate = table.Column<DateTimeOffset>(type: "datetimeoffset", nullable: false),
                     ShipToAddress_FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ShipToAddress_Adress1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    ShipToAddress_Adress2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ShipToAddress_Address1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    ShipToAddress_Address2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShipToAddress_City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShipToAddress_State = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     ShipToAddress_PostCode = table.Column<string>(type: "nvarchar(max)", nullable: true),
@@ -223,8 +223,8 @@ namespace API.Data.Migrations
                 {
                     Id = table.Column<int>(type: "int", nullable: false),
                     FullName = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Adress1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
-                    Adress2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address1 = table.Column<string>(type: "nvarchar(max)", nullable: true),
+                    Address2 = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     City = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     State = table.Column<string>(type: "nvarchar(max)", nullable: true),
                     PostCode = table.Column<string>(type: "nvarchar(max)", nullable: true),

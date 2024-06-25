@@ -12,8 +12,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace API.Data.Migrations
 {
     [DbContext(typeof(ApplicationDbContext))]
-    [Migration("20240620053256_AddedOrderEntities")]
-    partial class AddedOrderEntities
+    [Migration("20240622191733_AddressErrorFix")]
+    partial class AddressErrorFix
     {
         /// <inheritdoc />
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -273,10 +273,10 @@ namespace API.Data.Migrations
                     b.Property<int>("Id")
                         .HasColumnType("int");
 
-                    b.Property<string>("Adress1")
+                    b.Property<string>("Address1")
                         .HasColumnType("nvarchar(max)");
 
-                    b.Property<string>("Adress2")
+                    b.Property<string>("Address2")
                         .HasColumnType("nvarchar(max)");
 
                     b.Property<string>("City")
@@ -428,10 +428,10 @@ namespace API.Data.Migrations
                             b1.Property<int>("OrderId")
                                 .HasColumnType("int");
 
-                            b1.Property<string>("Adress1")
+                            b1.Property<string>("Address1")
                                 .HasColumnType("nvarchar(max)");
 
-                            b1.Property<string>("Adress2")
+                            b1.Property<string>("Address2")
                                 .HasColumnType("nvarchar(max)");
 
                             b1.Property<string>("City")

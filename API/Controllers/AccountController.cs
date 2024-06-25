@@ -8,6 +8,7 @@ using API.Data;
 using API.DTOs;
 using API.DTOs.Mappers;
 using API.Entities;
+using API.Entities.OrderAggragate;
 using API.Services;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Identity;
@@ -150,6 +151,40 @@ namespace API.Controllers
                     .Include(x => x.Items)
                     .ThenInclude(x => x.Product)
                     .FirstOrDefaultAsync(x => x.BuyerId == buyerId);
+        }
+
+        [Authorize]
+        [HttpGet("savedAddress")]
+        public async Task<ActionResult<UserAddress>> GetSavedAddress()
+        {
+            var UserAddress = await _userManager.Users
+                    .Where(x => x.UserName == User.Identity.Name)
+                    .Select(x => x.Address)
+                    .FirstOrDefaultAsync();
+            return UserAddress;
+        }
+        [Authorize]
+        [HttpPost("saveAddress")]
+        public async Task<ActionResult> SaveAddress(ShippingAddress userAddress)
+        {
+            var user = await _userManager.Users
+                    .Include(x => x.Address)
+                    .FirstOrDefaultAsync(x => x.UserName == User.Identity.Name);
+            if (user == null) return NotFound();
+            var addressNew = new UserAddress
+            {
+
+                FullName = userAddress.FullName,
+                Address1 = userAddress.Address1,
+                Address2 = userAddress.Address2,
+                City = userAddress.City,
+                State = userAddress.State,
+                PostCode = userAddress.PostCode,
+                Country = userAddress.Country
+            };
+            user.Address = addressNew;
+            await _context.SaveChangesAsync();
+            return Ok();
         }
 
 

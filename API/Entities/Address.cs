@@ -5,11 +5,11 @@ using System.Threading.Tasks;
 
 namespace API.Entities
 {
-    public class Adress
+    public class Address
     {
         public string FullName { get; set; }
-        public string Adress1 { get; set; }
-        public string Adress2 { get; set; }
+        public string Address1 { get; set; }
+        public string Address2 { get; set; }
         public string City { get; set; }
         public string State { get; set; }
         public string PostCode { get; set; }

@@ -1,24 +1,20 @@
+import { useState, useEffect } from "react";
 import { FieldValues, useForm } from "react-hook-form";
-import CartStatusBar from "../Components/Cart/CartStatusBar";
-import { useStoreContext } from "../Context/useStoreContext";
-import { LoaderCircle } from "lucide-react";
 import apiConnector from "@/ApiConnector/connector";
-import { CreateOrder } from "@/types/Order";
-import { useEffect } from "react";
 
-function Checkout() {
-  const { cart, setCart } = useStoreContext();
+import { toast } from "react-toastify";
+
+export default function Profile() {
+  const [isLoading, setIsLoading] = useState(true);
   const {
     register,
     handleSubmit,
-    formState: { isLoading, errors },
+    formState: { errors },
     reset,
     getValues,
   } = useForm({
     mode: "onBlur",
   });
-  const total =
-    cart?.items.reduce((acc, item) => acc + item.price * item.quantity, 0) ?? 0;
   useEffect(() => {
     apiConnector.Account.fetchAddresses().then((response) => {
       console.log(response);
@@ -26,32 +22,33 @@ function Checkout() {
         reset({ ...getValues(), ...response, SaveAddress: false });
       }
     });
+    setIsLoading(false);
   }, []);
-
   async function submitForm(data: FieldValues) {
-    const createOrder: CreateOrder = {
-      shipToAddress: {
-        fullName: data.fullName,
-        address1: data.address1,
-        address2: data.address2,
-        city: data.city,
-        state: "",
-        postCode: data.postCode,
-        country: data.country,
-      },
-      saveAddress: data.SaveAddress,
+    const shipToAddress = {
+      fullName: data.fullName,
+      address1: data.address1,
+      address2: data.address2,
+      city: data.city,
+      state: "",
+      postCode: data.postCode,
+      country: data.country,
     };
+
     try {
-      const response = await apiConnector.Orders.create(createOrder);
-      setCart(null);
-      console.log(response);
+      await apiConnector.Account.saveAddress(shipToAddress);
+      toast.success("Address saved successfully");
     } catch (err) {
       console.log(err);
     }
   }
+
+  if (isLoading) {
+    return <div>Loading...</div>; // Use your LoadingSpinner component here
+  }
+
   return (
     <section className="bg-gray-200 py-8 antialiased dark:bg-gray-900 md:py-16">
-      <CartStatusBar status={1} />
       <form
         onSubmit={handleSubmit(submitForm)}
         className="mx-auto max-w-screen-xl px-4 2xl:px-0"
@@ -60,7 +57,7 @@ function Checkout() {
           <div className="min-w-0 flex-1 space-y-8">
             <div className="space-y-4">
               <h2 className="text-xl font-semibold text-gray-900 dark:text-white">
-                Delivery Details
+                User Profile
               </h2>
 
               <div className="grid grid-cols-1 gap-4 sm:grid-cols-2">
@@ -191,84 +188,19 @@ function Checkout() {
                 </div>
 
                 <br />
-                <div className="flex items-center gap-1">
-                  <input
-                    type="checkbox"
-                    id="SaveAddress"
-                    {...register("SaveAddress")}
-                    className="h-4 w-4 text-primary-600 border-gray-300 rounded focus:ring-primary-500"
-                  />
-                  <label
-                    htmlFor="SaveAddress"
-                    className="ml-2 block text-sm font-medium text-gray-900 dark:text-white"
-                  >
-                    Save this information for next time
-                  </label>
-                </div>
               </div>
             </div>
           </div>
         </div>
-
-        <div className="mt-6 w-full space-y-6 sm:mt-8 lg:mt-0 lg:max-w-xs xl:max-w-md">
-          <div className="flow-root">
-            <div className="-my-3 divide-y divide-gray-200 dark:divide-gray-800">
-              <dl className="flex items-center justify-between gap-4 py-3">
-                <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  Subtotal
-                </dt>
-                <dd className="text-base font-medium text-gray-900 dark:text-white">
-                  ${total.toFixed(2)}
-                </dd>
-              </dl>
-
-              <dl className="flex items-center justify-between gap-4 py-3">
-                <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  Savings
-                </dt>
-                <dd className="text-base font-medium text-green-500">0</dd>
-              </dl>
-
-              <dl className="flex items-center justify-between gap-4 py-3">
-                <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  Shipment
-                </dt>
-                <dd className="text-base font-medium text-gray-900 dark:text-white">
-                  $13
-                </dd>
-              </dl>
-
-              <dl className="flex items-center justify-between gap-4 py-3">
-                <dt className="text-base font-normal text-gray-500 dark:text-gray-400">
-                  Tax
-                </dt>
-                <dd className="text-base font-medium text-gray-900 dark:text-white">
-                  ${(total * 0.12).toFixed(2)}
-                </dd>
-              </dl>
-
-              <dl className="flex items-center justify-between gap-4 py-3">
-                <dt className="text-base font-bold text-gray-900 dark:text-white">
-                  Total
-                </dt>
-                <dd className="text-base font-bold text-gray-900 dark:text-white">
-                  ${(total + total * 0.12 + 13).toFixed(2)}
-                </dd>
-              </dl>
-            </div>
-          </div>
-
-          <div className="space-y-3">
-            <button
-              type="submit"
-              className="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition-colors duration-300  dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-gray-300 dark:hover:text-gray-100 font-bold w-full text-center"
-            >
-              {isLoading ? <LoaderCircle /> : "Proceed to Payment"}
-            </button>
-          </div>
+        <div className="mt-8">
+          <button
+            type="submit"
+            className="bg-blue-500 text-white px-3 py-1 rounded-lg hover:bg-blue-600 transition-colors duration-300  dark:bg-blue-600 dark:hover:bg-blue-700 dark:text-gray-300 dark:hover:text-gray-100 font-bold w-full text-center"
+          >
+            Save Address
+          </button>
         </div>
       </form>
     </section>
   );
 }
-export default Checkout;

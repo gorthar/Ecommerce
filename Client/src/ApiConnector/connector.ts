@@ -100,7 +100,9 @@ const Basket = {
 const Account = {
     login: (values: any) => requests.post(`account/login`, values),
     register: (values: any) => requests.post('account/register', values),
-    currentUser: () => requests.get('account/currentUser')
+    currentUser: () => requests.get('account/currentUser'),
+    fetchAddresses: () => requests.get('account/savedAddress'),
+    saveAddress: (address: any) => requests.post('account/saveAddress', address),
     };
 
 const Orders = {
@@ -108,6 +110,7 @@ const Orders = {
     details: (id: string) => requests.get(`Orders/${id}`),
     create: (order: any) => requests.post("Orders", order),
     };
+
 
 const apiConnector = {
     Products,
