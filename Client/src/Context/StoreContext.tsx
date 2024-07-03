@@ -1,6 +1,7 @@
 import { createContext, useState } from "react";
 import apiConnector from "../ApiConnector/connector";
 import { User } from "@/types/User";
+import { JwtPayload, jwtDecode } from "jwt-decode";
 
 interface StoreContextValue {
   cart: Basket | null;
@@ -59,7 +60,15 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       const newUser = await apiConnector.Account.currentUser();
       console.log(newUser);
       localStorage.setItem("user", JSON.stringify(newUser));
-      setUser(newUser as User);
+      const decodedToken = jwtDecode<JwtPayload>(newUser.token);
+
+      // eslint-disable-next-line @typescript-eslint/no-explicit-any
+      const userRole = (decodedToken as any)[
+        "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
+      ];
+      console.log(userRole);
+      const userWithRole = { ...newUser, Role: userRole };
+      setUser(userWithRole as User);
       setLoggedIn(true);
       setCart(newUser.basket);
     }

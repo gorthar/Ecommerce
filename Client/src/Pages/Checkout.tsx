@@ -26,6 +26,7 @@ function Checkout() {
         reset({ ...getValues(), ...response, SaveAddress: false });
       }
     });
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, []);
 
   async function submitForm(data: FieldValues) {
