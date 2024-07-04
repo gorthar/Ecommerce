@@ -3,6 +3,7 @@
 import globalRouter from "@/globalRouter";
 import axios, { AxiosError, AxiosResponse } from "axios";
 
+
 import { toast } from "react-toastify";
 
 
@@ -76,11 +77,15 @@ const requests = {
   post: (url: string, body: object) => axios.post(url, body).then(responseBody),
   put: (url: string, body: object) => axios.put(url, body).then(responseBody),
   del: (url: string) => axios.delete(url).then(responseBody),
+  getWithParams: (url: string, params: any) => axios.get(url, params).then(responseBody),
 };
 
 const Products = {
   list: () => requests.get("Products"),
   details: (id: string) => requests.get(`Products/${id}`),
+  create: (product: any) => requests.post("Products", product),
+  update: (product: any) => requests.put(`Products/${product.id}`, product),
+  delete: (id: string) => requests.del(`Products/${id}`),
 };
 
 const TestErrors = {
@@ -109,6 +114,8 @@ const Orders = {
     list: () => requests.get("Orders"),
     details: (id: string) => requests.get(`Orders/${id}`),
     create: (order: any) => requests.post("Orders", order),
+    listForAdmin: (params: any) => requests.getWithParams('Orders/admin/orders', { params }),
+    detailsForAdmin: (id: string) => requests.get(`Orders/admin/orders/${id}`),
     };
 
 

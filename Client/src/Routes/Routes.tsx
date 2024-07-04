@@ -11,6 +11,13 @@ import Register from "@/Pages/Register";
 import RequireAuth from "./RequireAuth";
 import Orders from "@/Pages/Orders";
 import Profile from "@/Pages/Profile";
+import RequireAdmin from "./RequireAdmin";
+import AdminLayout from "@/Pages/Admin/AdminLayout";
+import AdminDashboard from "@/Pages/Admin/AdminDashboard";
+import AddProducts from "@/Pages/Admin/AddProduct";
+import EditProduct from "@/Pages/Admin/EditProduct";
+import OrderList from "@/Pages/Admin/OrderList";
+import OrderDetails from "@/Pages/Admin/OrderDetails";
 
 export const router = createBrowserRouter([
   {
@@ -31,6 +38,22 @@ export const router = createBrowserRouter([
           {
             path: "/profile",
             element: <Profile />,
+          },
+        ],
+      },
+      {
+        path: "/admin",
+        element: <RequireAdmin />,
+        children: [
+          {
+            element: <AdminLayout />,
+            children: [
+              { path: "/admin/dashboard", element: <AdminDashboard /> },
+              { path: "/admin/products/add", element: <AddProducts /> },
+              { path: "/admin/products/edit", element: <EditProduct /> },
+              { path: "/admin/orders", element: <OrderList /> },
+              { path: "/admin/orders/:id", element: <OrderDetails /> },
+            ],
           },
         ],
       },

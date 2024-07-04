@@ -15,7 +15,7 @@ const NavBar: React.FC = () => {
   }, []);
 
   return (
-    <nav className="bg-gray-300 dark:bg-gray-800 text-white dark:text-gray-100 h-[4vh] shadow-lg">
+    <nav className="bg-gray-300 dark:bg-gray-800 text-white dark:text-gray-100 duration-200 ease-linear h-[4vh] shadow-lg">
       <div className="flex justify-end h-full items-center max-w-full gap-6">
         <NavButtons />
         <UserMenu />

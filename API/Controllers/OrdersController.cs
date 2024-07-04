@@ -126,5 +126,64 @@ namespace API.Controllers
 
         }
 
+        [HttpGet("admin/orders")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<IEnumerable<Order>>> GetOrdersForAdmin([FromQuery] OrderFilterParams filterParams)
+        {
+            var query = _context.Orders.AsQueryable();
+
+            if (filterParams.StartDate.HasValue)
+                query = query.Where(o => o.OrderDate >= filterParams.StartDate);
+
+            if (filterParams.EndDate.HasValue)
+                query = query.Where(o => o.OrderDate <= filterParams.EndDate);
+
+            if (!string.IsNullOrEmpty(filterParams.Status))
+                query = query.Where(o => o.Status == Enum.Parse<OrderStatus>(filterParams.Status));
+
+            if (!string.IsNullOrEmpty(filterParams.CustomerEmail))
+                query = query.Where(o => o.UserEmail.StartsWith(filterParams.CustomerEmail));
+
+            if (!string.IsNullOrEmpty(filterParams.SearchTerm))
+                query = query.Where(o => o.Id.ToString().Contains(filterParams.SearchTerm) ||
+                                         o.UserEmail.Contains(filterParams.SearchTerm));
+
+            try
+            {
+                return await query.ToListAsync();
+            }
+            catch (Exception)
+            {
+                return BadRequest(new ProblemDetails
+                {
+                    Title = "Invalid filter",
+                    Detail = "Invalid filter parameters"
+                });
+            }
+
+
+        }
+        [HttpGet("admin/orders/{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult<Order>> GetOrder(int id)
+        {
+            var order = await _context.Orders
+                .Include(o => o.OrderItems)
+                .Include(o => o.ShipToAddress)
+                .FirstOrDefaultAsync(o => o.Id == id);
+
+            if (order == null)
+                return NotFound();
+
+            return order;
+        }
+    }
+    public class OrderFilterParams
+    {
+        public DateTime? StartDate { get; set; }
+        public DateTime? EndDate { get; set; }
+        public string Status { get; set; }
+        public string CustomerEmail { get; set; }
+        public string SearchTerm { get; set; }
     }
 }

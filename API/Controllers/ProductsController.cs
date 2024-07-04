@@ -3,6 +3,8 @@ using Microsoft.EntityFrameworkCore;
 using API.Data;
 using API.Entities;
 using Microsoft.AspNetCore.Authorization;
+using API.DTOs.Mappers;
+using API.DTOs;
 
 namespace API.Controllers
 {
@@ -74,9 +76,10 @@ namespace API.Controllers
         // To protect from overposting attacks, see https://go.microsoft.com/fwlink/?linkid=2123754
         [HttpPost]
         [Authorize(Roles = "Admin")]
-        public async Task<ActionResult<Product>> PostProduct(Product product)
+        public async Task<ActionResult<Product>> PostProduct(CreateProductDto product)
         {
-            _context.Products.Add(product);
+            var newProduct = product.toProduct();
+            _context.Products.Add(newProduct);
             try
             {
                 await _context.SaveChangesAsync();
@@ -91,7 +94,7 @@ namespace API.Controllers
             }
 
 
-            return CreatedAtAction("GetProduct", new { id = product.Id }, product);
+            return CreatedAtAction("GetProduct", new { id = newProduct.Id }, newProduct);
         }
 
         // DELETE: api/Products/5
