@@ -177,6 +177,28 @@ namespace API.Controllers
 
             return order;
         }
+        [HttpPut("admin/orders/{id}")]
+        [Authorize(Roles = "Admin")]
+        public async Task<ActionResult> UpdateOrderStatus(int id, int status)
+        {
+            var order = await _context.Orders.FindAsync(id);
+
+            if (order == null)
+                return NotFound();
+
+            order.Status = (OrderStatus)status;
+
+            var result = await _context.SaveChangesAsync() > 0;
+
+            if (result)
+                return NoContent();
+
+            return BadRequest(new ProblemDetails
+            {
+                Title = "Failed to update order status",
+                Detail = "Failed to update order status, please try again"
+            });
+        }
     }
     public class OrderFilterParams
     {

@@ -1,4 +1,5 @@
 ﻿using API.Entities;
+using API.Entities.OrderAggragate;
 using Microsoft.AspNetCore.Identity;
 
 namespace API.Data
@@ -55,6 +56,10 @@ namespace API.Data
 
                 new Product { Name = "Salomon Speedcross 5 GTX", Description = "Designed for grip and traction in all conditions, perfect for trail running and outdoor activities.", Price = 160.00m, PictureUrl = "https://m.media-amazon.com/images/I/6177SPRA9+L._AC_SY625_.jpg", Type = "Trail Running Shoes", Brand = "Salomon", QuantityInStock = 5, starRating = 4.7}
             };
+
+
+
+
 
             context.Products.AddRange(products);
             context.SaveChanges();

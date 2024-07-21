@@ -52,7 +52,10 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy(name: corsPolicy, policy =>
     {
-        policy.AllowAnyHeader().AllowAnyMethod().AllowCredentials().WithOrigins("http://localhost:3000");
+        policy.WithOrigins("http://localhost:3000", "http://localhost:3001", "http://localhost:5000")
+              .AllowAnyHeader()
+              .AllowAnyMethod()
+              .AllowCredentials();
     });
 });
 
@@ -95,11 +98,12 @@ if (app.Environment.IsDevelopment())
 
 app.UseHttpsRedirection();
 
-
-
+app.UseAuthentication();
+app.UseAuthorization();
+app.UseCors(corsPolicy);
 app.MapControllers();
 
-app.UseCors(corsPolicy);
+
 
 var scope = app.Services.CreateScope();
 var context = scope.ServiceProvider.GetRequiredService<ApplicationDbContext>();
@@ -115,7 +119,6 @@ catch (Exception ex)
 
     logger.LogError(ex, "A problem occured during migration..");
 }
-app.UseAuthentication();
-app.UseAuthorization();
+
 
 app.Run();

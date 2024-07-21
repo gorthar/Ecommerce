@@ -12,9 +12,6 @@ function NavButtons() {
       <Link to="/" className={selectedStyle}>
         Home
       </Link>
-      <Link to="/contact" className={selectedStyle}>
-        Contact-Us
-      </Link>
       {user?.Role == "Admin" ? (
         <Link to="/admin/dashboard" className={selectedStyle}>
           Admin Panel

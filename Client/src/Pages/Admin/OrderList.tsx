@@ -1,5 +1,5 @@
+/* eslint-disable @typescript-eslint/no-explicit-any */
 import React, { useState, useEffect, useCallback, useMemo } from "react";
-import { Link } from "react-router-dom";
 import apiConnector from "@/ApiConnector/connector";
 import { toast } from "react-toastify";
 import LoadingSpinner from "@/Components/Util/LoadingSpinner";
@@ -64,7 +64,7 @@ export default function OrderList() {
   ) => {
     const { name, value } = e.target;
     setInputValues((prev) => ({ ...prev, [name]: value }));
-    debouncedSetFilterParams((prev) => ({ ...prev, [name]: value }));
+    debouncedSetFilterParams((prev: any) => ({ ...prev, [name]: value }));
   };
 
   const handleSubmit = (e: React.FormEvent) => {
@@ -113,10 +113,10 @@ export default function OrderList() {
             >
               <option value="">All Statuses</option>
               <option value="0">Pending</option>
-              <option value="1">Processing</option>
-              <option value="2">Shipped</option>
-              <option value="3">Delivered</option>
-              <option value="4">Cancelled</option>
+              <option value="1">Received</option>
+              <option value="2">Failed</option>
+              <option value="3">Shipped</option>
+              <option value="4">Delivered</option>
             </select>
           </div>
           <div className="flex flex-row mb-1 sm:mb-0">

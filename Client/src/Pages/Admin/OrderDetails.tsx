@@ -1,8 +1,10 @@
-import React, { useState, useEffect } from "react";
-import { Navigate, useParams } from "react-router-dom";
+import { useState, useEffect } from "react";
+import { Link, Navigate, useParams } from "react-router-dom";
 import apiConnector from "@/ApiConnector/connector";
 import { toast } from "react-toastify";
 import { useStoreContext } from "@/Context/useStoreContext";
+import LoadingSpinner from "@/Components/Util/LoadingSpinner";
+import { ArrowLeft } from "lucide-react";
 
 interface ShipToAddress {
   fullName: string | null;
@@ -65,9 +67,8 @@ export default function OrderDetails() {
   async function fetchOrderDetails() {
     setIsLoading(true);
     try {
-      const fetchedOrder = await apiConnector.Orders.details(id!);
+      const fetchedOrder = await apiConnector.Orders.detailsForAdmin(id!);
       setOrder(fetchedOrder);
-      console.log(fetchedOrder);
     } catch (err) {
       console.error(err);
       toast.error("Failed to fetch order details");
@@ -77,21 +78,21 @@ export default function OrderDetails() {
   }
 
   if (isLoading) {
-    return <div>Loading order details...</div>;
+    return <LoadingSpinner />;
   }
 
   if (!order) {
     return <div>Order not found</div>;
   }
 
-  const getStatusText = (status: number) => {
+  function getStatusName(status: number) {
     switch (status) {
       case 0:
         return "Pending";
       case 1:
-        return "Payment Received";
+        return "Received";
       case 2:
-        return "Payment Failed";
+        return "Failed";
       case 3:
         return "Shipped";
       case 4:
@@ -99,11 +100,27 @@ export default function OrderDetails() {
       default:
         return "Unknown";
     }
-  };
+  }
+
+  function onStatusChange(e: React.ChangeEvent<HTMLSelectElement>) {
+    const newStatus = parseInt(e.target.value);
+
+    apiConnector.Orders.updateStatus(id!, newStatus).then(() => {
+      setOrder((prev) => {
+        if (prev) {
+          return { ...prev, status: newStatus };
+        }
+        return prev;
+      });
+    });
+  }
 
   return (
     <div className="container mx-auto px-4 sm:px-8">
       <div className="py-8">
+        <Link to="/admin/orders" className="text-blue-600 hover:text-blue-900">
+          <ArrowLeft size={24} className="inline" /> Back to Orders
+        </Link>
         <h2 className="text-2xl font-semibold leading-tight">Order Details</h2>
         <div className="mt-4">
           <p>
@@ -117,7 +134,7 @@ export default function OrderDetails() {
             {new Date(order.orderDate).toLocaleString()}
           </p>
           <p>
-            <strong>Status:</strong> {getStatusText(order.status)}
+            <strong>Status:</strong> {getStatusName(order.status)}
           </p>
           <p>
             <strong>Subtotal:</strong> ${order.subtotal.toFixed(2)}
@@ -149,6 +166,21 @@ export default function OrderDetails() {
           <p>{order.shipToAddress.country}</p>
         </div>
         <div className="mt-8">
+          <h3 className="text-xl font-semibold">Change Status</h3>
+          <select
+            value={order.status}
+            onChange={onStatusChange}
+            className="mt-2 px-3 py-2 border border-gray-300 rounded-md"
+          >
+            <option value="0">Pending</option>
+            <option value="1">Received</option>
+            <option value="2">Failed</option>
+            <option value="3">Shipped</option>
+            <option value="4">Delivered</option>
+          </select>
+        </div>
+
+        <div className="mt-8">
           <h3 className="text-xl font-semibold">Order Items</h3>
           <table className="min-w-full leading-normal mt-4">
             <thead>
@@ -168,40 +200,35 @@ export default function OrderDetails() {
               </tr>
             </thead>
             <tbody>
-              {order.orderItems.map(
-                (item) => (
-                  console.log("Ordered item" + JSON.stringify(item)),
-                  (
-                    <tr key={item.id}>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        <div className="flex items-center">
-                          <div className="flex-shrink-0 w-10 h-10">
-                            <img
-                              className="w-full h-full rounded-full"
-                              src={item.pictureUrl}
-                              alt={item.name}
-                            />
-                          </div>
-                          <div className="ml-3">
-                            <p className="text-gray-900 whitespace-no-wrap">
-                              {item.name}
-                            </p>
-                          </div>
-                        </div>
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        ${item.price.toFixed(2)}
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        {item.quantity}
-                      </td>
-                      <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
-                        ${(item.price * item.quantity).toFixed(2)}
-                      </td>
-                    </tr>
-                  )
-                )
-              )}
+              {order.orderItems.map((item) => (
+                <tr key={item.id}>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    <div className="flex items-center">
+                      <div className="flex-shrink-0 w-10 h-10">
+                        <img
+                          className="w-full h-full rounded-full"
+                          src={item.itemOrdered.pictureUrl}
+                          alt={item.itemOrdered.name}
+                        />
+                      </div>
+                      <div className="ml-3">
+                        <p className="text-gray-900 whitespace-no-wrap">
+                          {item.itemOrdered.name}
+                        </p>
+                      </div>
+                    </div>
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    ${item.price.toFixed(2)}
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    {item.quantity}
+                  </td>
+                  <td className="px-5 py-5 border-b border-gray-200 bg-white text-sm">
+                    ${(item.price * item.quantity).toFixed(2)}
+                  </td>
+                </tr>
+              ))}
             </tbody>
           </table>
         </div>

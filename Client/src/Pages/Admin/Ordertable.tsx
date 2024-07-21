@@ -17,11 +17,11 @@ const getStatusColor = (status: number) => {
     case 1:
       return "bg-blue-100 text-blue-800";
     case 2:
-      return "bg-green-100 text-green-800";
+      return "bg-red-100 text-red-800";
     case 3:
       return "bg-gray-100 text-gray-800";
     case 4:
-      return "bg-red-100 text-red-800";
+      return "bg-green-100 text-green-800";
     default:
       return "bg-gray-100 text-gray-800";
   }
@@ -32,13 +32,13 @@ const getStatusText = (status: number) => {
     case 0:
       return "Pending";
     case 1:
-      return "Processing";
+      return "Received";
     case 2:
-      return "Shipped";
+      return "Failed";
     case 3:
-      return "Delivered";
+      return "Shipped";
     case 4:
-      return "Cancelled";
+      return "Delivered";
     default:
       return "Unknown";
   }

@@ -66,7 +66,6 @@ export function StoreProvider({ children }: { children: React.ReactNode }) {
       const userRole = (decodedToken as any)[
         "http://schemas.microsoft.com/ws/2008/06/identity/claims/role"
       ];
-      console.log(userRole);
       const userWithRole = { ...newUser, Role: userRole };
       setUser(userWithRole as User);
       setLoggedIn(true);

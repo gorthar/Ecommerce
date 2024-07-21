@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from "react";
+import { useState, useEffect } from "react";
 import { useForm, FieldValues } from "react-hook-form";
 import apiConnector from "@/ApiConnector/connector";
 import { toast } from "react-toastify";

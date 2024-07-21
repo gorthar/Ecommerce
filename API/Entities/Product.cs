@@ -14,6 +14,7 @@ namespace API.Entities
         public string Brand { get; set; }
         public int QuantityInStock { get; set; }
         public double starRating { get; set; }
+        public DateTime DateCreated { get; set; } = System.DateTime.Now;
 
     }
 }

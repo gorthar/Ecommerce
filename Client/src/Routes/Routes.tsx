@@ -1,7 +1,6 @@
 import { Navigate, createBrowserRouter } from "react-router-dom";
 import App from "../App";
 import HomePage from "../Pages/HomePage";
-import Contact from "../Pages/Contact";
 import Cart from "../Pages/Cart";
 import ProductDetails from "../Pages/ProductDetails";
 import NotFoundPage from "../Pages/NotFoundPage";
@@ -18,6 +17,7 @@ import AddProducts from "@/Pages/Admin/AddProduct";
 import EditProduct from "@/Pages/Admin/EditProduct";
 import OrderList from "@/Pages/Admin/OrderList";
 import OrderDetails from "@/Pages/Admin/OrderDetails";
+import OrderSuccess from "@/Pages/OrderSuccess";
 
 export const router = createBrowserRouter([
   {
@@ -39,6 +39,10 @@ export const router = createBrowserRouter([
             path: "/profile",
             element: <Profile />,
           },
+          {
+            path: "success",
+            element: <OrderSuccess />,
+          },
         ],
       },
       {
@@ -56,10 +60,6 @@ export const router = createBrowserRouter([
             ],
           },
         ],
-      },
-      {
-        path: "/contact",
-        element: <Contact />,
       },
       {
         path: "/cart",

@@ -17,7 +17,6 @@ function Orders() {
       );
       setOrders(sortedOrders);
       setLoading(false);
-      console.log(response);
     }
     fetchOrders();
   }, []);
@@ -29,13 +28,13 @@ function Orders() {
   };
 
   return (
-    <div className="max-w-7xl mx-auto flex flex-col items-center mt-10">
+    <div className="max-w-7xl mx-3 m:mx-auto lg:mx-auto flex flex-col items-center mt-10">
       <h1 className="text-2xl font-bold">Orders</h1>
       {orders.map((order) => (
         <div
           key={order.id}
           onClick={() => toggleOrderDetails(order.id)}
-          className="flex flex-col w-1/2 bg-gray-100 p-4 m-2 cursor-pointer dark:bg-gray-700 rounded-lg "
+          className="flex flex-col w-full sm:w-2/3 m:w-1/2 bg-gray-100 p-4 m-2 cursor-pointer dark:bg-gray-700 rounded-lg "
         >
           <h2 className="text-xl font-bold dark:text-gray-300">
             Order Date: {new Date(order.orderDate).toDateString()}{" "}
@@ -69,6 +68,7 @@ function Orders() {
                     />
                     <span>{item.name}</span>
                     <span>{item.quantity}</span>
+                    <span>${item.price * item.quantity}</span>
                   </div>
                 ))}
                 <div className="flex justify-between dark:text-gray-300">

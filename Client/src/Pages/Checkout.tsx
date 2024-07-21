@@ -5,8 +5,11 @@ import { LoaderCircle } from "lucide-react";
 import apiConnector from "@/ApiConnector/connector";
 import { CreateOrder } from "@/types/Order";
 import { useEffect } from "react";
+import { toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 function Checkout() {
+  const navigate = useNavigate();
   const { cart, setCart } = useStoreContext();
   const {
     register,
@@ -46,6 +49,8 @@ function Checkout() {
       const response = await apiConnector.Orders.create(createOrder);
       setCart(null);
       console.log(response);
+      toast.success("Order created successfully");
+      navigate("/success/");
     } catch (err) {
       console.log(err);
     }

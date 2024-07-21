@@ -29,6 +29,14 @@ axios.interceptors.request.use(config => {
 
 
 );
+// Tis interceptor is used to modify the put request of the admin/orders endpoint to include the status in the query params. Because the API expects the status to be in the query params and not in the body.
+axios.interceptors.request.use(config => {
+    if (config.url?.startsWith('Orders/admin/orders/') && config.method === 'put') {
+      config.params = { ...config.params, status: config.data.status };
+      delete config.data.status;
+    }
+    return config;
+  });
 
 axios.interceptors.response.use( async response => {
     return response;
@@ -116,7 +124,11 @@ const Orders = {
     create: (order: any) => requests.post("Orders", order),
     listForAdmin: (params: any) => requests.getWithParams('Orders/admin/orders', { params }),
     detailsForAdmin: (id: string) => requests.get(`Orders/admin/orders/${id}`),
+    updateStatus: (id: string, status: number) => requests.put(`Orders/admin/orders/${id}`, { status })
     };
+    const Analytics = {
+        get: () => requests.get("Analytics"),
+      };
 
 
 const apiConnector = {
@@ -125,6 +137,7 @@ const apiConnector = {
     Basket,
     Account,
     Orders,
+    Analytics,
 };
 
 export default apiConnector;

@@ -9,5 +9,6 @@ namespace API.Entities
     public class User : IdentityUser<int>
     {
         public UserAddress Address { get; set; }
+        public DateTime CreatedAt { get; set; } = DateTime.Now;
     }
 }
