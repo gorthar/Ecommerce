@@ -67,7 +67,7 @@ const TableOne: React.FC<TableOneProps> = ({ topSellingProducts }) => {
             </div>
 
             <div className="flex items-center justify-center p-2 xl:p-5">
-              <p className="text-meta-3">{product.orders}</p>
+              <p className="text-black dark:text-white">{product.orders}</p>
             </div>
 
             <div className="hidden items-center justify-center p-2 sm:flex xl:p-5">

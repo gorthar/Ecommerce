@@ -342,7 +342,10 @@ export default function EditProduct() {
                   </button>
                   <button
                     type="button"
-                    onClick={() => setSelectedProduct(null)}
+                    onClick={() => {
+                      setSelectedProduct(null);
+                      setSearchTerm("");
+                    }}
                     className="rounded-lg bg-gray-300 px-5 py-2.5 text-center text-sm font-medium text-gray-700 hover:bg-gray-400 focus:outline-none focus:ring-4 focus:ring-gray-200 dark:bg-gray-600 dark:text-white dark:hover:bg-gray-700 dark:focus:ring-gray-700"
                   >
                     Cancel

@@ -48,6 +48,7 @@ export default function OrderDetails() {
 
   useEffect(() => {
     fetchOrderDetails();
+    // eslint-disable-next-line react-hooks/exhaustive-deps
   }, [id]);
 
   if (user?.Role != "Admin") {
